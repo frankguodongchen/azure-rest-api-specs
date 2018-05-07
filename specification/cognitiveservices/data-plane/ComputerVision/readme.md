@@ -31,6 +31,7 @@ swagger-to-sdk:
   - repo: azure-sdk-for-python
   - repo: azure-libraries-for-java
   - repo: azure-sdk-for-go
+  - repo: azure-sdk-for-node
 ```
 
 
@@ -109,9 +110,10 @@ Please also specify `--azure-libraries-for-java-folder=<path to the root directo
 ``` yaml $(java)
 java:
   azure-arm: true
-  fluent: true
-  namespace: com.microsoft.azure.cognitiveservices.computervision
+  namespace: com.microsoft.azure.cognitiveservices.vision.computervision
   license-header: MICROSOFT_MIT_NO_CODEGEN
   payload-flattening-threshold: 1
-  output-folder: $(azure-libraries-for-java-folder)/azure-cognitiveservices/computervision
+  output-folder: $(azure-libraries-for-java-folder)/azure-cognitiveservices/vision/computervision
+  with-optional-parameters: true
+  with-single-async-method: true
 ```

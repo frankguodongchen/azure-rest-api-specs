@@ -1,5 +1,5 @@
 # Resource
-    
+
 > see https://aka.ms/autorest
 
 This is the AutoRest configuration file for Resource.
@@ -7,7 +7,7 @@ This is the AutoRest configuration file for Resource.
 
 
 ---
-## Getting Started 
+## Getting Started
 To build the SDK for Resource, simply [Install AutoRest](https://aka.ms/autorest/install) and in this folder, run:
 
 > `autorest`
@@ -21,7 +21,7 @@ To see additional help and options, run:
 
 
 
-### Basic Information 
+### Basic Information
 These are the global settings for the Resource API.
 
 ``` yaml
@@ -88,6 +88,19 @@ input-file:
 - Microsoft.Authorization/preview/2017-06-01-preview/policyAssignments.json
 - Microsoft.Authorization/preview/2017-06-01-preview/policySetDefinitions.json
 - Microsoft.Authorization/stable/2016-12-01/policyDefinitions.json
+
+# Needed when there is more than one input file
+override-info:
+  title: PolicyClient
+```
+
+### Tag: package-pure-policy-2017-06
+These settings apply only when `--tag=package-pure-policy-2017-06` is specified on the command line.
+
+``` yaml $(tag) == 'package-pure-policy-2017-06'
+input-file:
+- Microsoft.Authorization/preview/2017-06-01-preview/policyAssignments.json
+- Microsoft.Authorization/preview/2017-06-01-preview/policySetDefinitions.json
 
 # Needed when there is more than one input file
 override-info:
@@ -211,6 +224,43 @@ input-file:
 - Microsoft.Solutions/preview/2016-09-01-preview/managedapplications.json
 ```
 
+## Suppression
+``` yaml
+directive:
+  - suppress: UniqueResourcePaths
+    from: policySetDefinitions.json
+    where: $.paths
+    reason: policy set definition under an extension resource with Microsoft.Management
+  - suppress: UniqueResourcePaths
+    from: policyDefinitions.json
+    where: $.paths
+    reason: policy definition under an extension resource with Microsoft.Management
+  - suppress: BodyTopLevelProperties
+    from: resources.json
+    where: $.definitions.ResourceGroup.properties
+    reason: managedBy is a top level property
+  - suppress: BodyTopLevelProperties
+    from: resources.json
+    where: $.definitions.GenericResource.properties
+    reason: managedBy is a top level property
+  - suppress: BodyTopLevelProperties
+    from: managedapplications.json
+    where: $.definitions.Appliance.properties
+    reason: managedBy is a top level property
+  - suppress: BodyTopLevelProperties
+    from: managedapplications.json
+    where: $.definitions.ApplianceDefinition.properties
+    reason: managedBy is a top level property
+  - suppress: BodyTopLevelProperties
+    from: managedapplications.json
+    where: $.definitions.AppliancePatchable.properties
+    reason: managedBy is a top level property
+  - suppress: BodyTopLevelProperties
+    from: managedapplications.json
+    where: $.definitions.GenericResource.properties
+    reason: managedBy is a top level property
+```
+
 ---
 # Code Generation
 
@@ -232,6 +282,7 @@ swagger-to-sdk:
       - python ./scripts/multiapi_init_gen.py azure-mgmt-resource#links
   - repo: azure-libraries-for-java
   - repo: azure-sdk-for-go
+  - repo: azure-sdk-for-node
 ```
 
 
@@ -289,6 +340,7 @@ batch:
   - tag: package-subscriptions-2015-11
   - tag: package-links-2016-09
   - tag: package-managedapplications-2016-09
+  - tag: package-managedapplications-2017-09
 ```
 
 ### Tag: package-features-2015-12 and go
@@ -328,7 +380,7 @@ Please also specify `--go-sdk-folder=<path to the root directory of your azure-s
 
 ``` yaml $(tag) == 'package-policy-2017-06' && $(go)
 namespace: policy
-output-folder: $(go-sdk-folder)/services/resources/mgmt/2017-06-01-preview/policy
+output-folder: $(go-sdk-folder)/services/preview/resources/mgmt/2017-06-01-preview/policy
 ```
 
 ### Tag: package-policy-2016-12 and go
@@ -358,7 +410,7 @@ Please also specify `--go-sdk-folder=<path to the root directory of your azure-s
 
 ``` yaml $(tag) == 'package-policy-2015-10' && $(go)
 namespace: policy
-output-folder: $(go-sdk-folder)/services/resources/mgmt/2015-10-01-preview/policy
+output-folder: $(go-sdk-folder)/services/preview/resources/mgmt/2015-10-01-preview/policy
 ```
 
 ### Tag: package-resources-2018-02 and go
@@ -458,7 +510,17 @@ Please also specify `--go-sdk-folder=<path to the root directory of your azure-s
 
 ``` yaml $(tag) == 'package-managedapplications-2016-09' && $(go)
 namespace: managedapplications
-output-folder: $(go-sdk-folder)/services/resources/mgmt/2016-09-01-preview/managedapplications
+output-folder: $(go-sdk-folder)/services/preview/resources/mgmt/2016-09-01-preview/managedapplications
+```
+
+### Tag: package-managedapplications-2017-09 and go
+
+These settings apply only when `--tag=package-managedapplications-2017-09 --go` is specified on the command line.
+Please also specify `--go-sdk-folder=<path to the root directory of your azure-sdk-for-go clone>`.
+
+``` yaml $(tag) == 'package-managedapplications-2017-09' && $(go)
+namespace: managedapplications
+output-folder: $(go-sdk-folder)/services/resources/mgmt/2017-09-01/managedapplications
 ```
 
 ## Python

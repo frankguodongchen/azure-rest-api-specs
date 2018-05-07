@@ -137,6 +137,7 @@ swagger-to-sdk:
   - repo: azure-sdk-for-python
   - repo: azure-libraries-for-java
   - repo: azure-sdk-for-go
+  - repo: azure-sdk-for-node
 ```
 
 
@@ -148,7 +149,7 @@ csharp:
   license-header: MICROSOFT_MIT_NO_VERSION
   azure-arm: false
   namespace: Microsoft.Azure.CognitiveServices.Language.TextAnalytics
-  output-folder: $(csharp-sdks-folder)/CognitiveServices/dataPlane/Language/Microsoft.CognitiveServices.Language/Generated/TextAnalytics
+  output-folder: $(csharp-sdks-folder)/CognitiveServices/dataPlane/Language/TextAnalytics/Generated/TextAnalytics
   clear-output-folder: true
 ```
 
@@ -215,9 +216,10 @@ Please also specify `--azure-libraries-for-java-folder=<path to the root directo
 ``` yaml $(java)
 java:
   azure-arm: true
-  fluent: true
-  namespace: com.microsoft.azure.cognitiveservices.textanalytics
+  namespace: com.microsoft.azure.cognitiveservices.language.textanalytics
   license-header: MICROSOFT_MIT_NO_CODEGEN
   payload-flattening-threshold: 1
-  output-folder: $(azure-libraries-for-java-folder)/azure-cognitiveservices/textanalytics
+  output-folder: $(azure-libraries-for-java-folder)/azure-cognitiveservices/language/textanalytics
+  with-optional-parameters: true
+  with-single-async-method: true
 ```

@@ -1,5 +1,5 @@
 # TrafficManager
-    
+
 > see https://aka.ms/autorest
 
 This is the AutoRest configuration file for TrafficManager.
@@ -7,7 +7,7 @@ This is the AutoRest configuration file for TrafficManager.
 
 
 ---
-## Getting Started 
+## Getting Started
 To build the SDK for TrafficManager, simply [Install AutoRest](https://aka.ms/autorest/install) and in this folder, run:
 
 > `autorest`
@@ -20,12 +20,21 @@ To see additional help and options, run:
 ## Configuration
 
 
-### Basic Information 
+### Basic Information
 These are the global settings for the TrafficManager API.
 
 ``` yaml
 openapi-type: arm
-tag: package-2017-09-preview
+tag: package-2018-03
+```
+
+### Tag: package-2018-03
+
+These settings apply only when `--tag=package-2018-03` is specified on the command line.
+
+``` yaml $(tag) == 'package-2018-03'
+input-file:
+- Microsoft.Network/stable/2018-03-01/trafficmanager.json
 ```
 
 ### Tag: package-2017-09-preview
@@ -40,6 +49,15 @@ input-file:
 # Needed when there is more than one input file
 override-info:
   title: TrafficManagerManagementClient
+```
+
+### Tag: package-2017-09-preview-only
+
+These settings apply only when `--tag=package-2017-09-preview-only` is specified on the command line.
+
+``` yaml $(tag) == 'package-2017-09-preview-only'
+input-file:
+- Microsoft.Network/preview/2017-09-01-preview/trafficmanageranalytics.json
 ```
 
 
@@ -61,7 +79,7 @@ These settings apply only when `--tag=package-2017-03` is specified on the comma
 input-file:
 - Microsoft.Network/stable/2017-03-01/trafficmanager.json
 ```
- 
+
 ### Tag: package-2015-11
 
 These settings apply only when `--tag=package-2015-11` is specified on the command line.
@@ -86,10 +104,11 @@ swagger-to-sdk:
   - repo: azure-sdk-for-python
   - repo: azure-libraries-for-java
   - repo: azure-sdk-for-go
+  - repo: azure-sdk-for-node
 ```
 
 
-## C# 
+## C#
 
 These settings apply only when `--csharp` is specified on the command line.
 Please also specify `--csharp-sdks-folder=<path to "SDKs" directory of your azure-sdk-for-net clone>`.
@@ -149,10 +168,20 @@ go:
 
 ``` yaml $(go) && $(multiapi)
 batch:
+  - tag: package-2018-03
   - tag: package-2017-09-preview
   - tag: package-2017-05
   - tag: package-2017-03
   - tag: package-2015-11
+```
+
+### Tag: package-2018-03 and go
+
+These settings apply only when `--tag=package-2018-03 --go` is specified on the command line.
+Please also specify `--go-sdk-folder=<path to the root directory of your azure-sdk-for-go clone>`.
+
+``` yaml $(tag) == 'package-2018-03' && $(go)
+output-folder: $(go-sdk-folder)/services/trafficmanager/mgmt/2018-03-01/trafficmanager
 ```
 
 ### Tag: package-2017-09-preview and go
@@ -161,7 +190,7 @@ These settings apply only when `--tag=package-2017-09-preview --go` is specified
 Please also specify `--go-sdk-folder=<path to the root directory of your azure-sdk-for-go clone>`.
 
 ``` yaml $(tag) == 'package-2017-09-preview' && $(go)
-output-folder: $(go-sdk-folder)/services/trafficmanager/mgmt/2017-09-01-preview/trafficmanager
+output-folder: $(go-sdk-folder)/services/preview/trafficmanager/mgmt/2017-09-01-preview/trafficmanager
 ```
 
 ### Tag: package-2017-05 and go

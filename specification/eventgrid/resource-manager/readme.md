@@ -26,7 +26,17 @@ These are the global settings for the Azure EventGrid API.
 
 ``` yaml
 openapi-type: arm
-tag: package-2018-01
+tag: package-2018-05-preview
+```
+
+
+### Tag: package-2018-05-preview
+
+These settings apply only when `--tag=package-2018-05-preview` is specified on the command line.
+
+``` yaml $(tag) == 'package-2018-05-preview'
+input-file:
+- Microsoft.EventGrid/preview/2018-05-01-preview/EventGrid.json
 ```
 
 
@@ -74,10 +84,11 @@ swagger-to-sdk:
   - repo: azure-sdk-for-python
   - repo: azure-libraries-for-java
   - repo: azure-sdk-for-go
+  - repo: azure-sdk-for-node
 ```
 
 
-## C# 
+## C#
 
 These settings apply only when `--csharp` is specified on the command line.
 Please also specify `--csharp-sdks-folder=<path to "SDKs" directory of your azure-sdk-for-net clone>`.
@@ -106,6 +117,7 @@ python:
   payload-flattening-threshold: 2
   namespace: azure.mgmt.eventgrid
   package-name: azure-mgmt-eventgrid
+  package-version: 1.0.0
   clear-output-folder: true
 ```
 ``` yaml $(python) && $(python-mode) == 'update'
@@ -134,9 +146,19 @@ go:
 
 ``` yaml $(go) && $(multiapi)
 batch:
+  - tag: package-2018-05-preview
   - tag: package-2018-01
   - tag: package-2017-09-preview
   - tag: package-2017-06-preview
+```
+
+### Tag: package-2018-05-preview and go
+
+These settings apply only when `--tag=package-2018-05-preview --go` is specified on the command line.
+Please also specify `--go-sdk-folder=<path to the root directory of your azure-sdk-for-go clone>`.
+
+``` yaml $(tag) == 'package-2018-05-preview' && $(go)
+output-folder: $(go-sdk-folder)/services/preview/eventgrid/mgmt/2018-05-01-preview/eventgrid
 ```
 
 ### Tag: package-2018-01 and go
@@ -154,7 +176,7 @@ These settings apply only when `--tag=package-2017-09-preview --go` is specified
 Please also specify `--go-sdk-folder=<path to the root directory of your azure-sdk-for-go clone>`.
 
 ``` yaml $(tag) == 'package-2017-09-preview' && $(go)
-output-folder: $(go-sdk-folder)/services/eventgrid/mgmt/2017-09-15-preview/eventgrid
+output-folder: $(go-sdk-folder)/services/preview/eventgrid/mgmt/2017-09-15-preview/eventgrid
 ```
 
 ### Tag: package-2017-06-preview and go
@@ -163,7 +185,7 @@ These settings apply only when `--tag=package-2017-06-preview --go` is specified
 Please also specify `--go-sdk-folder=<path to the root directory of your azure-sdk-for-go clone>`.
 
 ``` yaml $(tag) == 'package-2017-06-preview' && $(go)
-output-folder: $(go-sdk-folder)/services/eventgrid/mgmt/2017-06-15-preview/eventgrid
+output-folder: $(go-sdk-folder)/services/preview/eventgrid/mgmt/2017-06-15-preview/eventgrid
 ```
 
 
